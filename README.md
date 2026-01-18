@@ -61,4 +61,12 @@ La visualización en desktop (PC / notebook) no está optimizada y puede verse d
 * 📱 Versión responsive para desktop.
 ---
 
+## INTERFAZ
+<img width="712" height="1546" alt="iPhone-13-PRO-dashboard-y5yi onrender com" src="https://github.com/user-attachments/assets/9898af8d-d1eb-4ba6-8c7e-f82c522930c5" />
+
+<img width="712" height="1546" alt="iPhone-13-PRO-dashboard-y5yi onrender com (1)" src="https://github.com/user-attachments/assets/d5808b1e-da09-49ef-a5fb-6dc04e9a95c7" />
+
+<img width="712" height="1546" alt="iPhone-13-PRO-dashboard-y5yi onrender com (2)" src="https://github.com/user-attachments/assets/149361fa-6edc-435f-a723-3c19d7f991ea" />
+
+
 Desarrollado como proyecto de práctica y aprendizaje.
