@@ -112,9 +112,20 @@ btnAgregar.addEventListener("click", () => {
         return;
     }
 
-    if (moneda === "R$" && USA_EFECTIVO && monto > SALDO_BRL_INICIAL) {
+   // Validación reales
+    if (moneda === "R$") {
+
+        // Si no tiene efectivo cargado
+        if (!USA_EFECTIVO) {
+        alert("No tenés efectivo cargado.");
+        return;
+        }
+
+        // Si tiene efectivo pero no alcanza
+        if (monto > SALDO_BRL_INICIAL) {
         alert("No tenés suficiente efectivo.");
         return;
+        }
     }
 
     transacciones.push({
