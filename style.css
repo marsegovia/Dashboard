@@ -26,15 +26,15 @@ body{
 .col2{
     display: flex;
     flex-direction: column;
-    margin-top: -150px;
+    margin-top: -250px;
     justify-content: center;
-    margin-left: 100px;
+    margin-left: 120px;
 }
 
 .budgets{
     display: flex;
     flex-direction: row;
-    margin-top: 50px;
+    margin-top: -250px;
     justify-content: center;
     margin-left: 100px;
 }
@@ -44,7 +44,7 @@ body{
     background-color: black;
     color: white;
     height: 100px;
-    width: 300px;
+    width: 290px;
     border-radius: 20px;
     justify-content: center;
     flex-direction: column;
@@ -68,9 +68,10 @@ body{
     background-color: white;
     color: black;
     height: 100px;
-    width: 300px;
-    margin-left: 50px;
+    width: 290px;
+    margin-left: 20px;
     border-radius: 20px;
+    margin-right: 20px;
     justify-content: center;
     flex-direction: column;
     display: flex;
@@ -90,6 +91,31 @@ body{
     font-weight: bold;
 }
 
+.DT{
+    display: flex;
+    background-color: black;
+    color: white;
+    height: 100px;
+    width: 300px;
+    border-radius: 20px;
+    justify-content: center;
+    flex-direction: column;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.DT h3{
+    margin-left: 20px;
+    font-size: 18px;
+    margin-bottom: -6px;
+    font-weight: lighter;
+}
+
+.DT p{
+    margin-left: 20px;
+    font-size: 25px;
+    font-weight: bold;
+}
+
 .transactions{
     background-color: white;
     border-bottom-left-radius: 20px;
@@ -99,10 +125,12 @@ body{
     overflow-y: auto;
     border: none;
     font-family: Arial, Helvetica, sans-serif;
+    margin-left: 100px;
 }
 
 .form{
     margin-top: 30px;
+    margin-left: 100px;
 }
 
 .form input{
@@ -195,7 +223,8 @@ h2{
     height: 100px;
     width: 100%;
     color: white;
-    border-radius: none;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
 }
 
 .col2{
@@ -206,6 +235,12 @@ h2{
     margin-left: 0;
 }
 
+.col3{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
 .budgets{
     flex-direction: column;
     margin-top: 20px;
@@ -213,17 +248,51 @@ h2{
     align-items: center;
 }
 
+.saldo{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+    border-radius: 20px;
+    height: 90px;
+    width: 320px;
+    margin-bottom: 10px;
+    justify-content: center;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.saldo h3{
+    margin-left: 10px;
+    font-size: 18px;
+    margin-bottom: -6px;
+    font-weight: lighter;
+}
+
+.saldo p{
+    margin-left: 20px;
+    font-size: 25px;
+    font-weight: bold;
+}
+
 .BG{
     height: 90px;
-    width: 290px;
+    width: 180px;
     margin-bottom: 20px;
     margin-left: -100px;
 }
 
 .GT{
-    margin-left: -100px;
+    margin-left: -85px;
     height: 90px;
-    width: 290px;
+    width: 320px;
+    margin-bottom: 20px;
+}
+
+.DT{
+    margin-left: 20px;
+    height: 90px;
+    width: 180px;
+    margin-bottom: 10px;
 }
 
 .transactions{
@@ -234,6 +303,7 @@ h2{
     border-bottom-right-radius: 0;
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
+    margin-left: -10px;
 }
 
 .form{
@@ -242,6 +312,15 @@ h2{
     flex-direction: column;
     align-items: center;
     width: 100%;
+    margin-left: -10px;
+}
+.form select{
+    width: 305px;
+    height: 30px;
+    border-color: white;
+    margin-bottom: 5px;
+    border-right-color: white;
+    background-color: white;
 }
 
 .form input{

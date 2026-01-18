@@ -17,21 +17,36 @@
         </div>
 
         <section class="col2">
+            <div class="saldo">
+                <h3>Saldo General</h3>
+                <p id="saldoGeneral"></p>
+            </div>
             <div class="budgets">
-                <div class="BG">
-                <h3>Balance General</h3>
+                <div class="col3">
+                    <div class="BG">
+                <h3>Efectivo</h3>
                 <p id="balance">R2500</p>
+                </div>
+
+            <div class="DT">
+                <h3>Dolares</h3>
+                <p id="dolares">$0000,00</p>
+            </div>
                 </div>
 
             <div class="GT">
                 <h3>Gastos Totales</h3>
                 <p id="gastos">$0000,00</p>
             </div>
-            </div>
+        </div>
 <br>
             <div class="form">
                 <input type="text" id="inputGasto" name="descripción" placeholder="Descripción">
                 <input type="number" id="inputMonto" name="monto" placeholder="Monto">
+                <select id="inputMoneda">
+                    <option value="R$">R$ Reales</option>
+                    <option value="USD">USD Dólares</option>
+                </select>
                 <button id="btnAgregar">Agregar</button>
             </div>
             

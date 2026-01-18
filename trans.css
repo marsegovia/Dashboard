@@ -65,6 +65,8 @@ body{
     margin-top: 10px;
     font-weight: bold;
     text-align: right;
+    display: flex;
+    flex-direction: column;
 }
 
 .total-general {
@@ -73,8 +75,8 @@ body{
     background: #e8f5e9;
     font-size: 18px;
     font-weight: bold;
-    text-align: center;
     border-radius: 8px;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 h1{
