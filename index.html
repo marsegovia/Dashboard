@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <title>Dashboard</title>
+</head>
+<body>
+    <section class="dashboard">
+        <div class="col1">
+            <h1>Finanzas</h1>
+            <nav class="menu">
+                <li><a href="./index.html">Inicio</a></li>
+                <li><a href="./transacciones.html">Transacciones</a></li>
+            </nav>
+        </div>
+
+        <section class="col2">
+            <div class="budgets">
+                <div class="BG">
+                <h3>Balance General</h3>
+                <p id="balance">R2500</p>
+                </div>
+
+            <div class="GT">
+                <h3>Gastos Totales</h3>
+                <p id="gastos">$0000,00</p>
+            </div>
+            </div>
+<br>
+            <div class="form">
+                <input type="text" id="inputGasto" name="descripción" placeholder="Descripción">
+                <input type="number" id="inputMonto" name="monto" placeholder="Monto">
+                <button id="btnAgregar">Agregar</button>
+            </div>
+            
+            <div class="transactions" id="transacciones">
+                <script src="./funcion.js"></script>
+            </div>
+        </section>
+    </section>
+</body>
+</html>

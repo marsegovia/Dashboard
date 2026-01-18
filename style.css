@@ -1,0 +1,285 @@
+body{
+    background-color: #DCE0E5;
+    margin: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.dashboard{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.col1{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: black;
+    height: 563px;
+    width: 200px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    color: white;
+}
+
+.col2{
+    display: flex;
+    flex-direction: column;
+    margin-top: -150px;
+    justify-content: center;
+    margin-left: 100px;
+}
+
+.budgets{
+    display: flex;
+    flex-direction: row;
+    margin-top: 50px;
+    justify-content: center;
+    margin-left: 100px;
+}
+
+.BG{
+    display: flex;
+    background-color: black;
+    color: white;
+    height: 100px;
+    width: 300px;
+    border-radius: 20px;
+    justify-content: center;
+    flex-direction: column;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.BG h3{
+    margin-left: 20px;
+    font-size: 18px;
+    margin-bottom: -6px;
+    font-weight: lighter;
+}
+
+.BG p{
+    margin-left: 20px;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.GT{
+    background-color: white;
+    color: black;
+    height: 100px;
+    width: 300px;
+    margin-left: 50px;
+    border-radius: 20px;
+    justify-content: center;
+    flex-direction: column;
+    display: flex;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.GT h3{
+    margin-left: 20px;
+    font-size: 18px;
+    margin-bottom: -6px;
+    font-weight: lighter;
+}
+
+.GT p{
+    margin-left: 20px;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.transactions{
+    background-color: white;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    max-height: 350px;
+    width: 500px;
+    overflow-y: auto;
+    border: none;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.form{
+    margin-top: 30px;
+}
+
+.form input{
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    height: 30px;
+    border: none;
+}
+
+.form button{
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    height: 30px;
+    border: none;
+    background-color: black;
+    color: white;
+    width: 158px;
+    height: 30px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.transaccion{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 5px;
+    padding: 5px 8px;
+    width: 100%;
+    box-sizing: border-box;
+    grid-template-columns: 1fr 80px 40px; 
+    border-bottom: 1px solid #ddd;
+}
+
+.transaccion button{
+    height: 15px;
+    font-size: 8px;
+    border: none;
+    background-color: transparent;
+}
+
+strong{
+    width: 130px;
+    font-size: 15px;
+    font-weight: light;
+}
+
+span{
+    font-size: 14px;
+    margin-left: 0px;
+}
+
+h2{
+    margin-left: 20px;
+}
+
+.menu{
+    display: flex;
+    flex-direction: column;
+}
+
+.menu li{
+    list-style: none;
+    margin-bottom: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.col1 h1{
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.menu li a{
+    text-decoration: none;
+    color: white;
+    margin-left: 10px;
+}
+
+
+@media (max-width: 728px) {
+
+    .dashboard{
+        flex-direction: column;
+}
+
+.col1{
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    height: 100px;
+    width: 100%;
+    color: white;
+    border-radius: none;
+}
+
+.col2{
+    margin-top: 30px;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-left: 0;
+}
+
+.budgets{
+    flex-direction: column;
+    margin-top: 20px;
+    width: 300px;
+    align-items: center;
+}
+
+.BG{
+    height: 90px;
+    width: 290px;
+    margin-bottom: 20px;
+    margin-left: -100px;
+}
+
+.GT{
+    margin-left: -100px;
+    height: 90px;
+    width: 290px;
+}
+
+.transactions{
+    max-height: 380px;
+    width: 360px;
+    text-align: center;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
+.form{
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.form input{
+    height: 28px;
+    margin-bottom:5px ;
+    border: none;
+    width: 300px;
+    text-align: center;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+.form button{
+    height: 30px;
+    width: 305px;
+    margin-bottom: 5px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+.transaccion{
+    text-align: left;
+}
+
+.menu{
+    flex-direction: row;
+}
+
+strong{
+    width: 130px;
+    font-size: 13px;
+}
+
+span{
+    font-size: 13px;
+}
+
+small{
+    font-size: 12px;
+}
+}
