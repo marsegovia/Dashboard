@@ -9,13 +9,60 @@ const inputMoneda = document.getElementById("inputMoneda");
 const saldoG = document.getElementById("saldoGeneral");
 
 
-const SALDO_INICIAL = 2500;
-const SALDO_BRL_INICIAL = 1000;   // reales en efectivo
-const SALDO_USD_INICIAL = 300;    // dólares
+let SALDO_TOTAL_INICIAL;   // R$
+let SALDO_BRL_INICIAL;     // efectivo R$
+let SALDO_USD_INICIAL;     // US
 const TIPO_CAMBIO_USD = 5;
 
 
 let transacciones = JSON.parse(localStorage.getItem("transacciones")) || [];
+
+const modal = document.getElementById("modalConfig");
+const btnGuardarConfig = document.getElementById("btnGuardarConfig");
+
+let config = JSON.parse(localStorage.getItem("config"));
+
+if (!config) {
+    modal.style.display = "flex";
+} else {
+    iniciarApp();
+}
+
+
+btnGuardarConfig.addEventListener("click", () => {
+    const saldoTotal = Number(document.getElementById("saldoTotalInput").value);
+    const efectivo = Number(document.getElementById("efectivoInput").value);
+    const dolares = Number(document.getElementById("dolaresInput").value);
+
+    if (saldoTotal <= 0) {
+        alert("Ingresá un saldo válido");
+        return;
+    }
+
+    const nuevaConfig = {
+        saldoTotal,
+        efectivo,
+        dolares
+    };
+
+    localStorage.setItem("config", JSON.stringify(nuevaConfig));
+    modal.style.display = "none";
+
+    iniciarApp();
+});
+
+
+function iniciarApp() {
+    config = JSON.parse(localStorage.getItem("config"));
+
+    SALDO_TOTAL_INICIAL = config.saldoTotal;
+    SALDO_BRL_INICIAL = config.efectivo;
+    SALDO_USD_INICIAL = config.dolares;
+
+    renderTransacciones();
+    actualizarTotales();
+}
+
 
 // Render inicial
 renderTransacciones();
@@ -89,11 +136,15 @@ function actualizarTotales() {
         if (t.moneda === "USD") gastosUSD += t.monto;
     });
 
+    // Saldos por moneda
     const balanceBRL = SALDO_BRL_INICIAL - gastosBRL;
     const balanceUSD = SALDO_USD_INICIAL - gastosUSD;
-    const balanceGeneral = balanceBRL + (balanceUSD * TIPO_CAMBIO_USD);
-    
 
+    // Saldo general en reales
+    const gastosUSDenBRL = gastosUSD * TIPO_CAMBIO_USD;
+    const balanceGeneral = SALDO_TOTAL_INICIAL - gastosBRL - gastosUSDenBRL;
+
+    // UI
     saldoG.textContent = `R$ ${balanceGeneral.toFixed(2)}`;
     balanceEl.textContent = `R$ ${balanceBRL.toFixed(2)}`;
     dolares.textContent = `USD ${balanceUSD.toFixed(2)}`;
@@ -104,4 +155,8 @@ function actualizarTotales() {
 // Guardar en localStorage
 function guardar() {
     localStorage.setItem("transacciones", JSON.stringify(transacciones));
+}
+
+function abrirConfig() {
+    modal.style.display = "flex";
 }

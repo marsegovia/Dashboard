@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./modal.css">
     <title>Dashboard</title>
 </head>
 <body>
@@ -13,9 +14,22 @@
             <nav class="menu">
                 <li><a href="./index.html">Inicio</a></li>
                 <li><a href="./transacciones.html">Transacciones</a></li>
+                <li><button onclick="abrirConfig()">Configuración</button></li>
             </nav>
         </div>
 
+        <div id="modalConfig" class="modal">
+        <div class="modal-content">
+
+        <input type="number" id="saldoTotalInput" placeholder="Saldo total (R$)">
+        <input type="number" id="efectivoInput" placeholder="Efectivo (R$)">
+        <input type="number" id="dolaresInput" placeholder="Dólares (USD)">
+
+        <button id="btnGuardarConfig">Guardar</button>
+        </div>
+    </div>
+
+    
         <section class="col2">
             <div class="saldo">
                 <h3>Saldo General</h3>
