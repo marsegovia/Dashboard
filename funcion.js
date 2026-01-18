@@ -9,7 +9,6 @@ const inputMoneda = document.getElementById("inputMoneda");
 const saldoG = document.getElementById("saldoGeneral");
 
 
-let SALDO_TOTAL_INICIAL;   // R$
 let SALDO_BRL_INICIAL;     // efectivo R$
 let SALDO_USD_INICIAL;     // US
 const TIPO_CAMBIO_USD = 5;
@@ -32,12 +31,11 @@ if (!config) {
 
 
 btnGuardarConfig.addEventListener("click", () => {
-    const saldoTotal = Number(document.getElementById("saldoTotalInput").value) || 0;
     const efectivo = Number(document.getElementById("efectivoInput").value) || 0;
     const dolares = Number(document.getElementById("dolaresInput").value) || 0;
 
-    if (saldoTotal <= 0) {
-        alert("Ingresá al menos un saldo total válido");
+    if ((efectivo || dolares) < 0) {
+        alert("Ingresá al menos un monto válido");
         return;
     }
 
@@ -46,7 +44,6 @@ btnGuardarConfig.addEventListener("click", () => {
 
 
     const nuevaConfig = {
-        saldoTotal,
         efectivo: efectivoFinal,
         dolares
     };
@@ -61,7 +58,6 @@ btnGuardarConfig.addEventListener("click", () => {
 function iniciarApp() {
     config = JSON.parse(localStorage.getItem("config"));
 
-    SALDO_INICIAL = config.saldoTotal;
     SALDO_BRL_INICIAL = config.efectivo || 0;
     SALDO_USD_INICIAL = config.dolares || 0;
 
@@ -147,7 +143,7 @@ function eliminarTransaccion(index) {
 
 // Calcular totales siempre desde cero
 function actualizarTotales() {
-     let gastosBRL = 0;
+    let gastosBRL = 0;
     let gastosUSD = 0;
 
     transacciones.forEach(t => {
@@ -156,24 +152,23 @@ function actualizarTotales() {
     });
 
     // --- Balance por billetera ---
-    let balanceBRL = USA_EFECTIVO 
-        ? SALDO_BRL_INICIAL - gastosBRL 
+    let balanceBRL = USA_EFECTIVO
+        ? SALDO_BRL_INICIAL - gastosBRL
         : 0;
 
     let balanceUSD = SALDO_USD_INICIAL - gastosUSD;
 
-    // --- Balance general siempre manda ---
-    const gastosUSDenBRL = gastosUSD * TIPO_CAMBIO_USD;
-    let balanceGeneral = SALDO_INICIAL - gastosBRL - gastosUSDenBRL;
-
-    // --- Evitar negativos visuales ---
+    // --- Evitar negativos ---
     if (USA_EFECTIVO) balanceBRL = Math.max(0, balanceBRL);
     balanceUSD = Math.max(0, balanceUSD);
-    balanceGeneral = Math.max(0, balanceGeneral);
+
+    // --- Saldo general calculado ---
+    const saldoGeneral = balanceBRL + (balanceUSD * TIPO_CAMBIO_USD);
 
     // --- UI ---
-    saldoG.textContent = `R$ ${balanceGeneral.toFixed(2)}`;
-    balanceEl.textContent = USA_EFECTIVO 
+    saldoG.textContent = `R$ ${saldoGeneral.toFixed(2)}`;
+
+    balanceEl.textContent = USA_EFECTIVO
         ? `R$ ${balanceBRL.toFixed(2)}`
         : `Sin efectivo`;
 
