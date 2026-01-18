@@ -13,6 +13,8 @@ let SALDO_TOTAL_INICIAL;   // R$
 let SALDO_BRL_INICIAL;     // efectivo R$
 let SALDO_USD_INICIAL;     // US
 const TIPO_CAMBIO_USD = 5;
+let USA_EFECTIVO = false;
+
 
 
 let transacciones = JSON.parse(localStorage.getItem("transacciones")) || [];
@@ -30,18 +32,22 @@ if (!config) {
 
 
 btnGuardarConfig.addEventListener("click", () => {
-    const saldoTotal = Number(document.getElementById("saldoTotalInput").value);
-    const efectivo = Number(document.getElementById("efectivoInput").value);
-    const dolares = Number(document.getElementById("dolaresInput").value);
+    const saldoTotal = Number(document.getElementById("saldoTotalInput").value) || 0;
+    const efectivo = Number(document.getElementById("efectivoInput").value) || 0;
+    const dolares = Number(document.getElementById("dolaresInput").value) || 0;
 
     if (saldoTotal <= 0) {
-        alert("Ingresá un saldo válido");
+        alert("Ingresá al menos un saldo total válido");
         return;
     }
 
+    // Si no cargó efectivo, asumimos que todo es saldo general
+    const efectivoFinal = efectivo;
+
+
     const nuevaConfig = {
         saldoTotal,
-        efectivo,
+        efectivo: efectivoFinal,
         dolares
     };
 
@@ -55,9 +61,11 @@ btnGuardarConfig.addEventListener("click", () => {
 function iniciarApp() {
     config = JSON.parse(localStorage.getItem("config"));
 
-    SALDO_TOTAL_INICIAL = config.saldoTotal;
-    SALDO_BRL_INICIAL = config.efectivo;
-    SALDO_USD_INICIAL = config.dolares;
+    SALDO_INICIAL = config.saldoTotal;
+    SALDO_BRL_INICIAL = config.efectivo || 0;
+    SALDO_USD_INICIAL = config.dolares || 0;
+
+    USA_EFECTIVO = SALDO_BRL_INICIAL > 0;
 
     renderTransacciones();
     actualizarTotales();
@@ -102,12 +110,23 @@ btnAgregar.addEventListener("click", () => {
 
     if (gasto === "" || monto <= 0) return;
 
+    // Validar saldo disponible
+    if (moneda === "USD" && monto > SALDO_USD_INICIAL) {
+        alert("No tenés suficientes dólares.");
+        return;
+    }
+
+    if (moneda === "R$" && USA_EFECTIVO && monto > SALDO_BRL_INICIAL) {
+        alert("No tenés suficiente efectivo.");
+        return;
+    }
+
     transacciones.push({
-    gasto,
-    monto,
-    moneda,
-    fecha: new Date().toISOString()
-});
+        gasto,
+        monto,
+        moneda,
+        fecha: new Date().toISOString()
+    });
 
     guardar();
     renderTransacciones();
@@ -128,7 +147,7 @@ function eliminarTransaccion(index) {
 
 // Calcular totales siempre desde cero
 function actualizarTotales() {
-    let gastosBRL = 0;
+     let gastosBRL = 0;
     let gastosUSD = 0;
 
     transacciones.forEach(t => {
@@ -136,17 +155,28 @@ function actualizarTotales() {
         if (t.moneda === "USD") gastosUSD += t.monto;
     });
 
-    // Saldos por moneda
-    const balanceBRL = SALDO_BRL_INICIAL - gastosBRL;
-    const balanceUSD = SALDO_USD_INICIAL - gastosUSD;
+    // --- Balance por billetera ---
+    let balanceBRL = USA_EFECTIVO 
+        ? SALDO_BRL_INICIAL - gastosBRL 
+        : 0;
 
-    // Saldo general en reales
+    let balanceUSD = SALDO_USD_INICIAL - gastosUSD;
+
+    // --- Balance general siempre manda ---
     const gastosUSDenBRL = gastosUSD * TIPO_CAMBIO_USD;
-    const balanceGeneral = SALDO_TOTAL_INICIAL - gastosBRL - gastosUSDenBRL;
+    let balanceGeneral = SALDO_INICIAL - gastosBRL - gastosUSDenBRL;
 
-    // UI
+    // --- Evitar negativos visuales ---
+    if (USA_EFECTIVO) balanceBRL = Math.max(0, balanceBRL);
+    balanceUSD = Math.max(0, balanceUSD);
+    balanceGeneral = Math.max(0, balanceGeneral);
+
+    // --- UI ---
     saldoG.textContent = `R$ ${balanceGeneral.toFixed(2)}`;
-    balanceEl.textContent = `R$ ${balanceBRL.toFixed(2)}`;
+    balanceEl.textContent = USA_EFECTIVO 
+        ? `R$ ${balanceBRL.toFixed(2)}`
+        : `Sin efectivo`;
+
     dolares.textContent = `USD ${balanceUSD.toFixed(2)}`;
     gastosEl.textContent = `R$ ${gastosBRL.toFixed(2)} | USD ${gastosUSD.toFixed(2)}`;
 }
