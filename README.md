@@ -10,7 +10,7 @@ La visualización en desktop (PC / notebook) no está optimizada y puede verse d
 
 ---
 
-## 🚀 Funcionalidades
+## Funcionalidades
 
 * Alta de transacciones con:
   * Descripción
@@ -31,29 +31,29 @@ La visualización en desktop (PC / notebook) no está optimizada y puede verse d
 * Scroll automático cuando hay muchas transacciones.
 ---
 
-## 📲 Diseño
+## Diseño
 * Interfaz optimizada para **dispositivos móviles**.
 * Layout simple y limpio.
 * No incluye responsive para pantallas grandes.
 ---
-## 🧱 Tecnologías utilizadas
+## Tecnologías utilizadas
 * HTML5
 * CSS3
 * JavaScript (Vanilla)
 * LocalStorage (persistencia de datos en el navegador)
 ---
-## ⚙️ Instalación y uso
+## Instalación y uso
 1. Clonar o descargar el proyecto.
 2. Abrir el archivo `index.html` desde un navegador.
 3. Usar preferentemente el modo móvil del navegador (DevTools → Toggle device toolbar).
 4. Comenzar a cargar transacciones.
 ---
-## 💡 Notas
+## Notas
 * Los datos se almacenan localmente en el navegador.
 * Si se borra el almacenamiento del navegador, se perderán las transacciones.
 * El tipo de cambio USD → BRL se define en el código JavaScript.
 ---
-## 📌 Futuras mejoras (opcional)
+## Futuras mejoras (opcional)
 * 📊 Gráficos de gastos.
 * 📅 Filtros por fecha.
 * 📤 Exportar reportes (Excel / PDF).
