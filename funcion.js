@@ -196,3 +196,20 @@ function guardar() {
 function abrirConfig() {
     modal.style.display = "flex";
 }
+
+
+
+const desktopBlock = document.getElementById("desktopBlock");
+
+function checkDevice() {
+    if (window.innerWidth > 768) {
+        desktopBlock.style.display = "flex";
+        document.body.style.overflow = "hidden";
+    } else {
+        desktopBlock.style.display = "none";
+        document.body.style.overflow = "auto";
+    }
+}
+
+checkDevice();
+window.addEventListener("resize", checkDevice);
