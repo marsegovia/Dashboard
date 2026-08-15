@@ -2,214 +2,149 @@ const contenedor = document.getElementById("transacciones");
 const btnAgregar = document.getElementById("btnAgregar");
 const inputGasto = document.getElementById("inputGasto");
 const inputMonto = document.getElementById("inputMonto");
-const balanceEl = document.getElementById("balance");
 const gastosEl = document.getElementById("gastos");
-const dolares = document.getElementById("dolares");
-const inputMoneda = document.getElementById("inputMoneda");
-const saldoG = document.getElementById("saldoGeneral");
-
-
-let SALDO_BRL_INICIAL;     // efectivo R$
-let SALDO_USD_INICIAL;     // US
-const TIPO_CAMBIO_USD = 5;
-let USA_EFECTIVO = false;
-
-
 
 let transacciones = JSON.parse(localStorage.getItem("transacciones")) || [];
-
-const modal = document.getElementById("modalConfig");
-const btnGuardarConfig = document.getElementById("btnGuardarConfig");
-
-let config = JSON.parse(localStorage.getItem("config"));
-
-if (!config) {
-    modal.style.display = "flex";
-} else {
-    iniciarApp();
-}
-
-
-btnGuardarConfig.addEventListener("click", () => {
-    const efectivo = Number(document.getElementById("efectivoInput").value) || 0;
-    const dolares = Number(document.getElementById("dolaresInput").value) || 0;
-
-    if ((efectivo || dolares) < 0) {
-        alert("Ingresá al menos un monto válido");
-        return;
-    }
-
-    // Si no cargó efectivo, asumimos que todo es saldo general
-    const efectivoFinal = efectivo;
-
-
-    const nuevaConfig = {
-        efectivo: efectivoFinal,
-        dolares
-    };
-
-    localStorage.setItem("config", JSON.stringify(nuevaConfig));
-    modal.style.display = "none";
-
-    iniciarApp();
-});
-
-
-function iniciarApp() {
-    config = JSON.parse(localStorage.getItem("config"));
-
-    SALDO_BRL_INICIAL = config.efectivo || 0;
-    SALDO_USD_INICIAL = config.dolares || 0;
-
-    USA_EFECTIVO = SALDO_BRL_INICIAL > 0;
-
-    renderTransacciones();
-    actualizarTotales();
-}
-
 
 // Render inicial
 renderTransacciones();
 actualizarTotales();
 
-// Renderizar transacciones
+// ===============================
+// AGREGAR GASTO
+// ===============================
+
+btnAgregar.addEventListener("click", () => {
+    const gasto = inputGasto.value.trim();
+    const monto = Number(inputMonto.value);
+    // Validar datos
+    if (gasto === "") {
+        alert("Ingresá una descripción.");
+        return;
+    }
+    if (monto <= 0 || isNaN(monto)) {
+        alert("Ingresá un monto válido.");
+        return;
+    }
+    // Crear gasto
+    const nuevaTransaccion = {
+        id: Date.now(),
+        gasto: gasto,
+        monto: monto,
+        fecha: new Date().toISOString()
+    };
+    // Agregar al array
+    transacciones.push(nuevaTransaccion);
+    // Guardar
+    guardar();
+    // Actualizar pantalla
+    renderTransacciones();
+    actualizarTotales();
+    // Limpiar inputs
+    inputGasto.value = "";
+    inputMonto.value = "";
+    // Volver el cursor al campo descripción
+    inputGasto.focus();
+});
+
+// ===============================
+// RENDERIZAR TRANSACCIONES
+// ===============================
+
 function renderTransacciones() {
-    contenedor.innerHTML = "<h2>Transacciones</h2>";
+
+    contenedor.innerHTML = "<h2>Gastos</h2>";
 
     if (transacciones.length === 0) {
-        contenedor.innerHTML += "<p>No hay transacciones</p>";
+        contenedor.innerHTML += "<p>No hay gastos registrados</p>";
         return;
     }
 
-    transacciones.forEach((t, index) => {
+    // Mostrar los últimos gastos primero
+    [...transacciones].reverse().forEach((t) => {
+
         const div = document.createElement("div");
+
         const fecha = new Date(t.fecha);
         const fechaFormateada = fecha.toLocaleDateString("es-AR");
+
         div.classList.add("transaccion");
 
         div.innerHTML = `
-        <strong>${t.gasto}</strong>
-        <span>${t.moneda} ${t.monto}</span>
-        <small>${fechaFormateada}</small>
-    <button onclick="eliminarTransaccion(${index})">❌</button>
-`;
+            <strong>${t.gasto}</strong>
+            <span>$ ${t.monto.toFixed(2)}</span>
+            <small>${fechaFormateada}</small>
+            <button onclick="eliminarTransaccion(${t.id})">❌</button>
+        `;
 
         contenedor.appendChild(div);
     });
 }
 
-// Agregar transacción
-btnAgregar.addEventListener("click", () => {
-    const gasto = inputGasto.value.trim();
-    const monto = Number(inputMonto.value);
-    const moneda = inputMoneda.value;
 
-    if (gasto === "" || monto <= 0) return;
+// ===============================
+// ELIMINAR GASTO
+// ===============================
 
-    // Validar saldo disponible
-    if (moneda === "USD" && monto > SALDO_USD_INICIAL) {
-        alert("No tenés suficientes dólares.");
-        return;
-    }
+function eliminarTransaccion(id) {
 
-   // Validación reales
-    if (moneda === "R$") {
-
-        // Si no tiene efectivo cargado
-        if (!USA_EFECTIVO) {
-        alert("No tenés efectivo cargado.");
-        return;
-        }
-
-        // Si tiene efectivo pero no alcanza
-        if (monto > SALDO_BRL_INICIAL) {
-        alert("No tenés suficiente efectivo.");
-        return;
-        }
-    }
-
-    transacciones.push({
-        gasto,
-        monto,
-        moneda,
-        fecha: new Date().toISOString()
-    });
-
-    guardar();
-    renderTransacciones();
-    actualizarTotales();
-
-    inputGasto.value = "";
-    inputMonto.value = "";
-});
-
-// Eliminar transacción
-function eliminarTransaccion(index) {
-    transacciones.splice(index, 1);
+    transacciones = transacciones.filter(t => t.id !== id);
 
     guardar();
     renderTransacciones();
     actualizarTotales();
 }
 
-// Calcular totales siempre desde cero
+
+// ===============================
+// CALCULAR TOTAL DE GASTOS
+// ===============================
+
 function actualizarTotales() {
-    let gastosBRL = 0;
-    let gastosUSD = 0;
+
+    let gastosTotales = 0;
 
     transacciones.forEach(t => {
-        if (t.moneda === "R$") gastosBRL += t.monto;
-        if (t.moneda === "USD") gastosUSD += t.monto;
+        gastosTotales += t.monto;
     });
 
-    // --- Balance por billetera ---
-    let balanceBRL = USA_EFECTIVO
-        ? SALDO_BRL_INICIAL - gastosBRL
-        : 0;
-
-    let balanceUSD = SALDO_USD_INICIAL - gastosUSD;
-
-    // --- Evitar negativos ---
-    if (USA_EFECTIVO) balanceBRL = Math.max(0, balanceBRL);
-    balanceUSD = Math.max(0, balanceUSD);
-
-    // --- Saldo general calculado ---
-    const saldoGeneral = balanceBRL + (balanceUSD * TIPO_CAMBIO_USD);
-
-    // --- UI ---
-    saldoG.textContent = `R$ ${saldoGeneral.toFixed(2)}`;
-
-    balanceEl.textContent = USA_EFECTIVO
-        ? `R$ ${balanceBRL.toFixed(2)}`
-        : `Sin efectivo`;
-
-    dolares.textContent = `USD ${balanceUSD.toFixed(2)}`;
-    gastosEl.textContent = `R$ ${gastosBRL.toFixed(2)} | USD ${gastosUSD.toFixed(2)}`;
+    gastosEl.textContent = `$ ${gastosTotales.toFixed(2)}`;
 }
 
 
-// Guardar en localStorage
+// ===============================
+// GUARDAR
+// ===============================
+
 function guardar() {
-    localStorage.setItem("transacciones", JSON.stringify(transacciones));
+    localStorage.setItem(
+        "transacciones",
+        JSON.stringify(transacciones)
+    );
 }
 
-function abrirConfig() {
-    modal.style.display = "flex";
-}
 
-
+// ===============================
+// BLOQUEO DE ESCRITORIO
+// ===============================
 
 const desktopBlock = document.getElementById("desktopBlock");
 
 function checkDevice() {
-    if (window.innerWidth > 768) {
+
+    if (window.innerWidth >= 768) {
+
         desktopBlock.style.display = "flex";
         document.body.style.overflow = "hidden";
+
     } else {
+
         desktopBlock.style.display = "none";
         document.body.style.overflow = "auto";
+
     }
 }
 
 checkDevice();
+
 window.addEventListener("resize", checkDevice);

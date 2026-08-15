@@ -31,7 +31,6 @@
 }
 
 
-
 body{
     background-color: #DCE0E5;
     margin: 0;
@@ -72,45 +71,13 @@ body{
     margin-left: 120px;
 }
 
-.budgets{
-    display: flex;
-    flex-direction: row;
-    margin-top: -250px;
-    justify-content: center;
-    margin-left: 100px;
-}
-
-.BG{
-    display: flex;
-    background-color: black;
-    color: white;
-    height: 100px;
-    width: 290px;
-    border-radius: 20px;
-    justify-content: center;
-    flex-direction: column;
-    font-family: Arial, Helvetica, sans-serif;
-}
-
-.BG h3{
-    margin-left: 20px;
-    font-size: 18px;
-    margin-bottom: -6px;
-    font-weight: lighter;
-}
-
-.BG p{
-    margin-left: 20px;
-    font-size: 25px;
-    font-weight: bold;
-}
 
 .GT{
     background-color: white;
     color: black;
     height: 100px;
     width: 290px;
-    margin-left: 20px;
+    margin-left: 40px;
     border-radius: 20px;
     margin-right: 20px;
     justify-content: center;
@@ -273,20 +240,13 @@ h2{
     justify-content: center;
     align-items: center;
     width: 100%;
-    margin-left: 0;
+    margin-left: 0px;
 }
 
 .col3{
     display: flex;
     flex-direction: row;
     justify-content: center;
-}
-
-.budgets{
-    flex-direction: column;
-    margin-top: 20px;
-    width: 300px;
-    align-items: center;
 }
 
 .saldo{
@@ -315,25 +275,11 @@ h2{
     font-weight: bold;
 }
 
-.BG{
-    height: 90px;
-    width: 180px;
-    margin-bottom: 20px;
-    margin-left: -100px;
-}
-
 .GT{
-    margin-left: -85px;
+    margin-left: 0px;
     height: 90px;
     width: 320px;
     margin-bottom: 20px;
-}
-
-.DT{
-    margin-left: 20px;
-    height: 90px;
-    width: 180px;
-    margin-bottom: 10px;
 }
 
 .transactions{
