@@ -1,11 +1,10 @@
-const CACHE_NAME = "finanzas-v1";
+const CACHE_NAME = "pesito-v1";
 
 const ARCHIVOS = [
     "./",
     "./index.html",
     "./transacciones.html",
     "./style.css",
-    "./modal.css",
     "./funcion.js"
 ];
 
