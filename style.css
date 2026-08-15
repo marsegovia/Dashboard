@@ -226,7 +226,7 @@ h2{
 .col1{
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: space-around;
     text-align: center;
     height: 100px;
     width: 100%;
