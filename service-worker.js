@@ -1,4 +1,4 @@
-const CACHE_NAME = "pesito-v1";
+const CACHE_NAME = "pesito-v2";
 
 const ARCHIVOS = [
     "./",
